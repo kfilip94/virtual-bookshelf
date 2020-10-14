@@ -19,7 +19,7 @@ export default function Library ({ content, session }) {
       <h1>Protected Page</h1>
       <p><strong>{content}</strong></p>
       Signed in as {session.user.email} <br/>
-      <button onClick={() => signOut({ callbackUrl: 'http://localhost:3000/login' })}>Sign out</button>
+      <button onClick={() => signOut({ callbackUrl: `${process.env.NEXTAUTH_URL}/login` })}>Sign out</button>
       <iframe src="/api/examples/jwt"/>
 
     </div>

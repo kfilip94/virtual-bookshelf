@@ -24,11 +24,11 @@ export default function Home() {
         {!session && <>
           Not signed in <br/>
           {/* <button onClick={signIn}>Sign in</button> */}
-          <button onClick={() => signIn('google', ({ callbackUrl: 'http://localhost:3000/library' }))}>Sign in</button>
+          <button onClick={() => signIn('google', ({ callbackUrl: `${process.env.NEXTAUTH_URL}/library` }))}>Sign in</button>
         </>}
         {session && <>
           Signed in as {session.user.email} <br/>
-          <button onClick={() => signOut({ callbackUrl: 'http://localhost:3000/login' })}>Sign out</button>
+          <button onClick={() => signOut({ callbackUrl: `${process.env.NEXTAUTH_URL}/login` })}>Sign out</button>
         </>}
       </main>     
       {/* <script src="https://apis.google.com/js/platform.js" async defer></script> */}

@@ -8,7 +8,7 @@ export default function Login() {
           <a href="/api/auth/signin"
              onClick={(e) => {
              e.preventDefault()
-             signIn('google', { callbackUrl: 'http://localhost:3000/library' })
+             signIn('google', { callbackUrl: `${process.env.NEXTAUTH_URL}/library` })
           }}>You must be signed in to view this page</a>
         </p>
       </>
