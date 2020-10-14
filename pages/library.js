@@ -20,7 +20,7 @@ export default function Library ({ content, session }) {
       <p><strong>{content}</strong></p>
       Signed in as {session.user.email} <br/>
       <button onClick={() => signOut({ callbackUrl: `${process.env.NEXTAUTH_URL}/login` })}>Sign out</button>
-      <iframe src="/api/examples/jwt"/>
+      <iframe src="/api/auth/callback/google"/>
 
     </div>
   )
