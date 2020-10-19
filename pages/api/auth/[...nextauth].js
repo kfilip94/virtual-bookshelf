@@ -6,7 +6,9 @@ const options = {
   providers: [
     Providers.Google({
       clientId: process.env.NEXT_PUBLIC_OAUTH_CLIENT_ID,
-      clientSecret: process.env.NEXT_PUBLIC_OAUTH_CLIENT_SECRET
+      clientSecret: process.env.NEXT_PUBLIC_OAUTH_CLIENT_SECRET,
+      authorizationUrl: 'https://accounts.google.com/o/oauth2/v2/auth?prompt=consent&access_type=offline&response_type=code',
+
     }),
     // ...add more providers here
   ],
@@ -17,7 +19,7 @@ const options = {
   // Notes:
   // * You must to install an appropriate node_module for your database
   // * The Email provider requires a database (OAuth providers do not)
-  database: process.env.DATABASE_URL,
+  // database: process.env.DATABASE_URL,
 
   // The secret should be set to a reasonably long random string.
   // It is used to sign cookies and to sign and encrypt JSON Web Tokens, unless
@@ -28,7 +30,7 @@ const options = {
     // Use JSON Web Tokens for session instead of database sessions.
     // This option can be used with or without a database for users/accounts.
     // Note: `jwt` is automatically set to `true` if no database is specified.
-    jwt: true, 
+    // jwt: true, 
     
     // Seconds - How long until an idle session expires and is no longer valid.
     // maxAge: 30 * 24 * 60 * 60, // 30 days
@@ -71,10 +73,21 @@ const options = {
   // when an action is performed.
   // https://next-auth.js.org/configuration/callbacks 
   callbacks: { 
-    // signIn: async (user, account, profile) => { return Promise.resolve(true) },
-    // redirect: async (url, baseUrl) => { return Promise.resolve(baseUrl) },
-    // session: async (session, user) => { return Promise.resolve(session) },
-    // jwt: async (token, user, account, profile, isNewUser) => { return Promise.resolve(token) }
+  //   signIn: async (user, account, profile) => {
+  //     console.log('SIGNiN: ',{ user, account, profile })
+  //     return Promise.resolve({ xdsignin: 'xs', ...account })
+  //   },
+  //   // redirect: async (url, baseUrl) => { return Promise.resolve(baseUrl) },
+    session: async (session, user, sessionToken) => {
+      return Promise.resolve({ ...session, user })
+    },
+    jwt: async (token, user, account, profile, isNewUser) => {
+      if(account && account.accessToken) {
+        token.accessToken = account.accessToken
+      }
+      return Promise.resolve(token)
+
+    }
   },
 
   // Events are useful for logging
