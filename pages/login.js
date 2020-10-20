@@ -9,7 +9,7 @@ export default function Login() {
              onClick={(e) => {
              e.preventDefault()
              signIn('google', { callbackUrl: `${process.env.NEXTAUTH_URL}/library` })
-          }}>You must be signed in to view this page</a>
+          }}>Log in</a>
         </p>
       </>
     )
