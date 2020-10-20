@@ -1,5 +1,5 @@
 import { Provider } from 'next-auth/client';
-// import './styles.css';
+import '../styles/global.scss'
 
 export default function App ({ Component, pageProps }) {
   console.log('pageProps: ',pageProps)
